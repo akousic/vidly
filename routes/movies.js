@@ -2,12 +2,11 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const joi = require('joi');
-const {Movie, validate } = require('../models/movies')
-const {Genre} = require('../models/genres');
-mongoose.connect('mongodb://localhost/vidly').then(() => console.log('Connected to vidly database successfully..'))
-    .catch((err) => console.log(err.message));
-
-
+const {Movie, validate } = require('../models/movie')
+const {Genre} = require('../models/genre');
+mongoose.connect('mongodb://kousic:kousic1@ds026018.mlab.com:26018/vidly-kousic')
+.then(() => console.log('Connected to vidly database successfully..'))
+.catch((err) => console.log(err.message));
 
 router.get('/', async (req, res) => {
     const movies = await Movie.find();
@@ -115,4 +114,5 @@ router.delete('/:id', async (req, res) => {
     }
 
 })
+
 module.exports = router;

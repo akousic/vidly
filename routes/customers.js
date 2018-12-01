@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const { Customer } = require('../models/customer');
 const { validate } = require('../models/customer');
 
-mongoose.connect('mongodb://localhost/vidly').then(()=> console.log('Connected to vidly database..'))
+mongoose.connect('mongodb://kousic:kousic1@ds026018.mlab.com:26018/vidly-kousic').then(()=> console.log('Connected to vidly database..'))
 .catch((err)=>{console.log(`Error Occurred: ${err.message}`)});
 
 

@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const joi = require('joi');
-const { Genre, validate } = require('../models/genres')
+const { Genre, validate } = require('../models/genre')
 
-mongoose.connect('mongodb://localhost/vidly').then(() => console.log('Connected to vidly database successfully..'))
+mongoose.connect('mongodb://kousic:kousic1@ds026018.mlab.com:26018/vidly-kousic').then(() => console.log('Connected to vidly database successfully..'))
     .catch((err) => console.log(err.message));
 
 router.get('/', async (req, res) => {
