@@ -10,8 +10,11 @@
   "author": "Kousic Ayyadevara",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^3.0.2",
+    "bcryptjs": "^2.4.3",
     "express": "^4.16.4",
-    "joi": "^14.1.1",
-    "mongoose": "^5.3.14"
+    "joi": "^14.3.0",
+    "lodash": "^4.17.11",
+    "mongoose": "^5.3.15"
   }
 }

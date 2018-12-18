@@ -5,6 +5,9 @@ const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 
+mongoose.connect('mongodb://localhost:27017/vidly').then(()=> console.log('Connected to vidly database..'))
+.catch((err)=>{console.log(`Error Occurred: ${err.message}`)});
+
 router.get('/', async (req, res) => {
   const rentals = await Rental.find().sort('-dateOut');
   res.send(rentals);
