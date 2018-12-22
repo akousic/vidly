@@ -31,8 +31,6 @@ function validateSchema (login){
       email: joi.string().email().required(),
       password: joi.string().min(6).max(1024).required()
   });
-
-  console.log(joi.validate(schema,login))
   return joi.validate(login,schema);
 
 }
