@@ -6,7 +6,6 @@ const joi = require('joi');
 const { User } = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
 const config = require('config');
 // mongoose.connect('mongodb://kousic:kousic1@ds026018.mlab.com:26018/vidly-kousic').then(() => console.log('Connected to vidly database successfully..'))
 //     .catch((err) => console.log(err.message));

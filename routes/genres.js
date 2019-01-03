@@ -1,3 +1,4 @@
+const auth = require('../middleware/auth');
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
@@ -18,12 +19,18 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
 
-    const genre = await Genre.findById(req.params.id);
-    if (!genre) return res.status(404).send('Genre not found for the desired ID')
-    else return res.send(genre);
+    try{
+        const genre = await Genre.findById(req.params.id);
+        if (!genre) return res.status(404).send('Genre not found for the desired ID')
+        else return res.send(genre);
+    }
+    catch(error) {
+res.send(error);
+    }
+   
 });
 
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
 
     const { error } = validate(req.body);
     if (error) return res.status(400).send(error.details[0].message);

@@ -1,10 +1,13 @@
+const auth = require('../middleware/auth');
 const _ = require('lodash');
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const joi = require('joi');
 const { User, validate } = require('../models/User');
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const config = require('config');
 
 // mongoose.connect('mongodb://kousic:kousic1@ds026018.mlab.com:26018/vidly-kousic').then(() => console.log('Connected to vidly database successfully..'))
 //     .catch((err) => console.log(err.message));
@@ -12,6 +15,10 @@ const bcrypt = require('bcryptjs')
     mongoose.connect('mongodb://localhost:27017/vidly').then(()=> console.log('Connected to vidly database..'))
 .catch((err)=>{console.log(`Error Occurred: ${err.message}`)});
 
+router.get('/me', auth, async (req,res)=>{
+  const user =  await User.findById(req.user._id).select('-password');
+  res.send(user);
+});
 
 router.post('/', async (req, res) => {
     const { error } = validate(req.body);
@@ -30,7 +37,9 @@ router.post('/', async (req, res) => {
 
     
         await user.save();
-        res.send(_.pick(user,['_id','name','email']));
+        const token = user.generateAuthToken();
+        res.header('x-auth-token',token).send(_.pick(user,['_id','name','email']));
+  
 
     }
     catch(err){
