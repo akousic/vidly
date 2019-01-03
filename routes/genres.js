@@ -4,6 +4,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const joi = require('joi');
 const { Genre, validate } = require('../models/genre')
+const { User } = require('../models/User');
 
 // mongoose.connect('mongodb://kousic:kousic1@ds026018.mlab.com:26018/vidly-kousic').then(() => console.log('Connected to vidly database successfully..'))
 //     .catch((err) => console.log(err.message));
@@ -73,20 +74,25 @@ router.put('/:id', async (req, res) => {
 
 });
 
-router.delete('/:id', async (req, res) => {
-
-    if(mongoose.Types.ObjectId.isValid(req.params.id)){
-        const genre = await Genre.findByIdAndDelete(req.params.id);
-        if (!genre) return res.status(404).send('Genre not found for the desired ID');
-        else {
-    
-            res.send(genre);
+router.delete('/:id', auth, async (req, res) => {
+    const user = await User.findById(req.user._id);
+    console.log(user.isAdmin);
+    if(user.isAdmin){
+        if(mongoose.Types.ObjectId.isValid(req.params.id)){
+            const genre = await Genre.findByIdAndDelete(req.params.id);
+            if (!genre) return res.status(404).send('Genre not found for the desired ID');
+            else {
+        
+                res.send(genre);
+            }
         }
+        else{
+            res.send('Invalid Genre ID')
+        }
+
     }
-    else{
-        res.send('Invalid Genre ID')
-    }
-   
+
+    else res.status(401).send('Not Authorised to delete the resource')
 
     })
     
