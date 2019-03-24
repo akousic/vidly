@@ -14,9 +14,16 @@ const { User } = require('../models/User');
 mongoose.connect('mongodb://localhost:27017/vidly').then(()=> console.log('Connected to vidly database..'))
 .catch((err)=>{console.log(`Error Occurred: ${err.message}`)});
 
-router.get('/', async (req, res) => {
-    const genres = await Genre.find();
-    res.send(genres);
+router.get('/', async (req, res, next) => {
+    try{
+        const genres = await Genre.find();
+        res.send(genres);
+    }
+
+    catch(ex){
+        next(ex);
+    }
+    
 });
 
 router.get('/:id', async (req, res) => {
