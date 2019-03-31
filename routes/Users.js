@@ -9,11 +9,11 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 
-// mongoose.connect('mongodb://kousic:kousic1@ds026018.mlab.com:26018/vidly-kousic').then(() => console.log('Connected to vidly database successfully..'))
-//     .catch((err) => console.log(err.message));
+ mongoose.connect('mongodb://kousic:kousic1@ds026018.mlab.com:26018/vidly-kousic').then(() => console.log('Connected to vidly database successfully..'))
+     .catch((err) => console.log(err.message));
 
-    mongoose.connect('mongodb://localhost:27017/vidly').then(()=> console.log('Connected to vidly database..'))
-.catch((err)=>{console.log(`Error Occurred: ${err.message}`)});
+    //mongoose.connect('mongodb://localhost:27017/vidly').then(()=> console.log('Connected to vidly database..'))
+//.catch((err)=>{console.log(`Error Occurred: ${err.message}`)});
 
 router.get('/me', auth, async (req,res)=>{
   const user =  await User.findById(req.user._id).select('-password');
